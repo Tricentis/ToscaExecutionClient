@@ -4,7 +4,7 @@
 Our Tosca Execution Clients allow you to trigger Tosca TestEvents from CI/CD pipelines or other environments. Coming with lots of configuration options, Tosca Execution Clients are an out-of-the box solution to leverage the Execution API of Tosca Server. If you want to integrate directly with Tosca Server Execution API, please take a look at Tricentis Tosca documentation. On top of that, Tosca Execution Clients are fully script-based, enabling easy customization to tailor your Tosca CI/CD integration exactly to your business needs.
 
 ## System requirements
-Tosca Execution Clients require at least Tosca Server 15.2 LTS or newer. To support both Windows and Linux operating systems, we provide 2 versions of Tosca Execution Client. For Windows systems we provide Tosca Execution Client as PowerShell script. For Windows systems we provide Tosca Execution Client as Bash script.
+Tosca Execution Clients require at least Tosca Server 15.2 LTS or newer. To support both Windows and Linux operating systems, we provide 2 versions of Tosca Execution Client. For Windows systems we provide Tosca Execution Client as PowerShell script. For Linux systems we provide Tosca Execution Client as Shell script.
 
 ### Windows
 To run Tosca Execution Client on Windows, at least PowerShell 3.1 or newer is required.
