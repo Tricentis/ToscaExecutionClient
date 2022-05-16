@@ -1,46 +1,48 @@
 # ToscaExecutionClient
 
 ## Description
-Our Tosca Execution Clients allow you to trigger Tosca TestEvents from CI/CD pipelines or other environments. Coming with lots of configuration options, Tosca Execution Clients are an out-of-the box solution to leverage the Execution API of Tosca Server. If you want to integrate directly with Tosca Server Execution API, please take a look at Tricentis Tosca documentation. On top of that, Tosca Execution Clients are fully script-based, enabling easy customization to tailor your Tosca CI/CD integration exactly to your business needs.
+Our Tosca Execution Clients allow you to trigger Tosca TestEvents from CI/CD pipelines or other environments. They're an out-of-the-box solution that comes with a variety of configuration options. What's more, the clients are fully script-based, which allows you to tailor your Tosca CI/CD integration exactly to your needs.
+Tosca Execution Clients leverage the Execution API of Tosca Server. If you want to integrate directly with the Execution API, check out our online help.
 
 ## System requirements
-Tosca Execution Clients require at least Tosca Server 15.2 LTS or newer. To support both Windows and Linux operating systems, we provide 2 versions of Tosca Execution Client. For Windows systems we provide Tosca Execution Client as PowerShell script. For Linux systems we provide Tosca Execution Client as Shell script.
+To use Tosca Execution Clients, you need Tosca Server 15.2 LTS or higher. We offer the client in two versions: for Windows systems and Linux systems.
 
-### Windows
-To run Tosca Execution Client on Windows, at least PowerShell 3.1 or newer is required.
+* Windows
+  * The client is available as PowerShell script.
+  * You need PowerShell 3.1 or newer.
+* Linux
+  * The client is available as Shell script.
+  * You need curl 7.12.3 or newer or newer.
 
-### Linux
-To run Tosca Execution Client on Linux, at least curl 7.12.3 or newer is required.
-
-## Getting started
-Depending on whether you run Tosca Execution Client on Windows or Linux, different configuration is needed in advance. To get you started as quickly as possible, we have summarized all required steps in this chapter. 
+## Get started
+Depending on whether you want to run the Tosca Execution Client on Windows or Linux, you need different system configurations.
 
 ### Windows
 #### PowerShell Execution Policy
-The machine that launches Tosca Execution Client needs to be allowed to execute the script. Depending on your specific infrastructure setup, this can already be in place. If not, you need to change the PowerShell Execution Policy for your machine. More information can be found in this [article](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.2) from Microsoft. 
+The machine that runs the Tosca Execution Client needs to be allowed to execute the script. Depending on your specific infrastructure setup, you may already have this in place. If you don't, change the PowerShell Execution Policy on the machine. For more information, take a look at this Microsoft [article](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.2).
 
-#### Add Tosca Server Certificate to Trusted Root certificate store
-If you run Tosca Server with https, you need to add the certificate used by Tosca Server to the Trusted Root certificate store on the machine that runs Tosca Execution Client. 
+#### Add Tosca Server certificate to Trusted Root certificate store
+If you run Tosca Server with https, you need to add the certificate used by Tosca Server to the Trusted Root certificate store on the machine that runs the Tosca Execution Client.
 
-### Linux
+### Linux configurations
 #### Make sure that Tosca Execution Client can be executed
-In order to use Tosca Execution Client on a Linux machine, the user that executes the script needs to be allowed to do so. You can achieve this with following command:
+Make sure that the machine can execute the Tosca Execution Client, which means that the user who executes the script needs to be allowed to do so. You can achieve this with following command:
 
 ```
 chmod u+x <path to tosca_execution_client.sh>
 ```
 
-#### Make sure that Tosca Server certificate is available on executing machine
-If you run Tosca Server with https, the certificate used by Tosca Server needs to be available on the machine that runs Tosca Execution Client. You can then use the --caCert option to make Tosca Execution Client trust this certificate.   
+#### Make sure that Tosca Server certificate is available on the executing machine
+If you run Tosca Server with https, the certificate used by Tosca Server needs to be available on the machine that runs Tosca Execution Client. Use the --caCertificate option to make the Tosca Execution Client trust this certificate. 
 
-## Usage
+## Run Tosca Execution Client
 
 ### Launch Tosca Execution Client
-Tosca Execution Client for Windows can be launched with following command:
+To launch the Tosca Execution Client on a Windows system, use the following command:
 ```
 .\tosca_execution_client.ps1 -toscaServerUrl <toscaServerUrl> -projectName <projectName> -events <events> [Options]
 ```
-Tosca Execution Client for Linux can be launched with following command:
+To launch the Tosca Execution Client on a Linux system, use the following command:
 ```
 ./tosca_execution_client.sh --toscaServerUrl <toscaServerUrl> --projectName <projectName> --events <events> [Options]
 ```
