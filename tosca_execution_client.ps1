@@ -300,9 +300,7 @@ function generateHeader() {
 #   Timestamp
 #######################################
 function getTimestamp() {
-    $currentDate = (Get-Date).ToUniversalTime()
-
-    return [System.Math]::Truncate((Get-Date -Date $currentDate -UFormat %s))
+    return [DateTimeOffset]::Now.ToUnixTimeSeconds()
 }
 
 #######################################
