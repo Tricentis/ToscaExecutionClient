@@ -372,7 +372,7 @@ function fetchOrRefreshAccessToken() {
 #######################################
 function enqueueExecution() {
     $header = generateHeader
-    $body = "{""ProjectName"":""$projectName"",""ExecutionEnviroment"":""$executionEnvironment"",""Events"":$events,""ImportResult"":$($importResults.ToLower()),""Creator"":""$creator""}"
+    $body = "{""ProjectName"":""$projectName"",""ExecutionEnvironment"":""$executionEnvironment"",""Events"":$events,""ImportResult"":$($importResults.ToLower()),""Creator"":""$creator""}"
     $contentType = "application/json"
 
     log "INF" "Enqueue execution with provided parameters..."
