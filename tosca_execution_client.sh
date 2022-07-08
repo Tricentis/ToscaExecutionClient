@@ -594,7 +594,7 @@ function writeResults() {
 while [[ "$#" > 0 ]]; do case ${1} in
   # Mandatory parameters 
   --toscaServerUrl) toscaServerUrl="${2}"; shift;shift;;
-  --executionEnvironment) executonEnvironment="${2}"; shift;shift;;
+  --executionEnvironment) executionEnvironment="${2}"; shift;shift;;
   --projectName) projectName="${2}"; shift;shift;;
   --events) events="${2}"; shift;shift;;
   --eventsConfigFilePath) eventsConfigFilePath="${2}"; shift;shift;;
