@@ -5,7 +5,11 @@ Our Tosca Execution Clients allow you to trigger Tosca TestEvents from CI/CD pip
 Tosca Execution Clients leverage the Execution API of Tosca Server. If you want to integrate directly with the Execution API, check out our online help.
 
 ## Supported functionality
+### Tosca 15.2
 Tosca Execution Client supports full functionality for DEX executions. For Elastic Execution Grid executions, Tosca Execution Client supports enqueuing executions through the enqueueOnly option.
+
+### Tosca 16.0 Technical Preview
+Tosca Execution Client supports full functionality for DEX executions. For Elastic Execution Grid executions, Tosca Execution Client supports full functionality, except overwriting test configuration parameters.
 
 ## System requirements
 To use Tosca Execution Clients, you need Tosca Server 15.2 LTS or higher. We offer the client in two versions: for Windows systems and Linux systems.
