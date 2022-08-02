@@ -26,7 +26,7 @@ Depending on whether you want to run the Tosca Execution Client on Windows or Li
 
 ### Windows
 #### PowerShell Execution Policy
-The machine that runs the Tosca Execution Client needs to be allowed to execute the script. Depending on your specific infrastructure setup, you may already have this in place. If you don't, change the PowerShell Execution Policy on the machine. For more information, take a look at this Microsoft [article](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.2).
+The machine that runs the Tosca Execution Client needs to be allowed to execute the script. Depending on your specific infrastructure setup, you may already have this in place. If you don't, change the PowerShell Execution Policy on the machine. For more information, take a look at this Microsoft [article] (https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.2).
 
 #### Add Tosca Server certificate to Trusted Root certificate store
 If you run Tosca Server with https, you need to add the certificate used by Tosca Server to the Trusted Root certificate store on the machine that runs the Tosca Execution Client.
@@ -61,6 +61,8 @@ To launch the Tosca Execution Client on a Linux system, use the following comman
 | projectName           | Project root name of the Tosca project where the event is located.      
 | events                | Names or uniqueIds of the events that you want to execute, separated by comma. If you want to overwrite TCPs or Agent Characteristics for a specific event, use the "eventsConfigFilePath" parameter instead.      
 | eventsConfigFilePath &nbsp; &nbsp;  | Path to the JSON file that contains the event configuration, including TCPs and Agent Characteristics. If you use this parameter, you don't need to use the "events" parameter.
+
+Check out the [Tosca help](https://support.tricentis.com/community/manuals_detail.do?&url=continuous_integration/tosca_execution_clients.htm) for more information on how to configure events and some practical examples.
 
 ### Options
 | Name                  | Description   
