@@ -692,12 +692,20 @@ fi
 # Start status polling
 log "INF" "Starting execution status polling with an interval of ${pollingInterval} seconds..."
 executionTimeout=$(($(date +%s)+${clientTimeout}))
-
-while ( [ $(date +%s) -le ${executionTimeout} ] && [[ ! "${executionStatus}" == *"Completed"* ]] && [[ ! "${executionStatus}" == "Error" ]] && [[ ! "${executionStatus}" == "Cancelled" ]] )
+keepPolling=true;
+while ( [ "$keepPolling" == true ] )
 do
   fetchExecutionStatus
   log "INF" "Status of execution with id \"${executionId}\": \"${executionStatus}\""
 
+  if ( [ $(date +%s) -le ${executionTimeout} ] && [[ ! "${executionStatus}" == *"Completed"* ]] && [[ ! "${executionStatus}" == "Error" ]] && [[ ! "${executionStatus}" == "Cancelled" ]] ) 
+  then
+    keepPolling=true;
+  else
+    keepPolling=false;
+    break
+  fi
+  
   # Fetch partial results for the execution
   if ( [ "${fetchPartialResults}" == "true" ] ) then
     log "INF" "Fetching partial results ..."
