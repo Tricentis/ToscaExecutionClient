@@ -443,7 +443,6 @@ function fetchExecutionStatus () {
     fetchOrRefreshAccessToken
 
     try {
-        log "DBG" "$content"
         $statusResponse = Invoke-WebRequest                                                   `
             -Uri "$toscaServerUrl/automationobjectservice/api/execution/$executionId/status"  `
             -Headers $header                                                                  `
