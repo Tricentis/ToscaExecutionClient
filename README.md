@@ -19,7 +19,7 @@ To use Tosca Execution Clients, you need Tosca Server 15.2 LTS or higher. We off
   * You need PowerShell 3.1 or newer.
 * Linux
   * The client is available as Shell script.
-  * You need curl 7.12.3 or newer.
+  * You need curl 7.43 or newer.
 
 ## Get started
 Depending on whether you want to run the Tosca Execution Client on Windows or Linux, you need different system configurations.
