@@ -3,7 +3,6 @@
 #####################################################################################
 #
 # Tosca Execution Client for PowerShell
-# Version 1.0.0
 # Triggers Tosca TestEvents via Tosca Server Execution API
 #
 #####################################################################################
@@ -124,7 +123,7 @@ function log([string]$logLevel, [string]$logMessage) {
     $logFilePath = "$logFolderPath\$logFileName"
 
     try {        
-        $message | Out-File $logFilePath -Append
+        $message | Out-File $logFilePath -Append       
 
     } catch {
         Write-Output "$ts [ERR] ToscaExecutionClient failed to write the log message in ""$path""."
@@ -259,7 +258,8 @@ function writeResults([bool]$writePartialResults = $false) {
         }
 
         try {
-            $executionResults | Out-File $resultsFilePath
+            $Utf8Encoding = New-Object System.Text.UTF8Encoding $False
+            [System.IO.File]::WriteAllLines($resultsFilePath, $executionResults, $Utf8Encoding)
             log "INF" "Finished writing execution results to file ""$resultsFilePath""."
 
         } catch {
@@ -336,6 +336,7 @@ function fetchOrRefreshAccessToken() {
                 -ContentType $contentType                `
                 -Method Post                             `
                 -TimeoutSec $requestTimeout              `
+                -UseBasicParsing                         `
 
             log "INF" "Sucessfully fetched access token"
 
@@ -391,6 +392,7 @@ function enqueueExecution() {
             -ContentType $contentType                                             `
             -Method Post                                                          `
             -TimeoutSec $requestTimeout                                           `
+            -UseBasicParsing                                                      `
 
         $status = $enqueueResponse.StatusCode
         $content = $enqueueResponse.Content
@@ -445,6 +447,7 @@ function fetchExecutionStatus () {
             -Headers $header                                                                  `
             -Method Get                                                                       `
             -TimeoutSec $requestTimeout                                                       `
+            -UseBasicParsing                                                                  `
 
         $status = $statusResponse.StatusCode
         $content = $statusResponse.Content
@@ -497,6 +500,7 @@ function fetchExecutionResults ([bool]$fetchPartialResults = $false) {
             -Headers $header                                                                                   `
             -Method Get                                                                                        `
             -TimeoutSec $requestTimeout                                                                        `
+            -UseBasicParsing                                                                                   `
 
         $status = $resultsResponse.StatusCode
         $content = $resultsResponse.Content
@@ -612,10 +616,16 @@ if ( ([String]::IsNullOrEmpty($executionId)) ) {
 # Start status polling
 log "INF" "Starting execution status polling with an interval of $pollingInterval seconds..."
 $executionTimeout = $(getTimestamp) + $clientTimeout
-
-while( ($(getTimestamp) -le $executionTimeout) -and -not ($executionStatus -like "*Completed*") -and -not ($executionStatus -eq "Error") -and -not ($executionStatus -eq "Cancelled") ) {
+$keepPolling = $true;
+while($keepPolling -eq $true) {
     fetchExecutionStatus
     log "INF" "Status of execution with id ""${executionId}"": ""${executionStatus}"""
+
+    $keepPolling = ($(getTimestamp) -le $executionTimeout) -and -not ($executionStatus -like "*Completed*") -and -not ($executionStatus -eq "Error") -and -not ($executionStatus -eq "Cancelled");
+
+    if($keepPolling -eq $false){
+        break;
+    }
 
     if ( $fetchPartialResults -eq $true ) {
         # Fetch partial results for the execution
@@ -627,7 +637,7 @@ while( ($(getTimestamp) -le $executionTimeout) -and -not ($executionStatus -like
         # Write partial results
         writeResults $true
     }
-
+    
     log "INF" "Starting next polling cycle in $pollingInterval seconds..."
     Start-Sleep -Seconds $pollingInterval
 }
