@@ -3,7 +3,6 @@
 #####################################################################################
 #
 # Tosca Execution Client for PowerShell
-# Version 1.0.0
 # Triggers Tosca TestEvents via Tosca Server Execution API
 #
 #####################################################################################
