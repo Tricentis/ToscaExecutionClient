@@ -258,8 +258,7 @@ function writeResults([bool]$writePartialResults = $false) {
         }
 
         try {
-            $Utf8Encoding = New-Object System.Text.UTF8Encoding $False
-            [System.IO.File]::WriteAllLines($resultsFilePath, $executionResults, $Utf8Encoding)
+            [System.IO.File]::WriteAllLines($resultsFilePath, $executionResults)
             log "INF" "Finished writing execution results to file ""$resultsFilePath""."
 
         } catch {
