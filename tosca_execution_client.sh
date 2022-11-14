@@ -580,8 +580,8 @@ function writeResults() {
       fi
     fi
 
-    echo -e ${executionResults} > ${resultsFilePath} 2> >(logErrorsFromStdIn)
-   log "INF" "Finished writing execution results to file \"${resultsFilePath}\""
+    echo ${executionResults} > ${resultsFilePath} 2> >(logErrorsFromStdIn)
+    log "INF" "Finished writing execution results to file \"${resultsFilePath}\""
   fi
 }
 
