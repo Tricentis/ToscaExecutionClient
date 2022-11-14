@@ -259,7 +259,12 @@ function writeResults([bool]$writePartialResults = $false) {
 
         try {
             $Utf8Encoding = New-Object System.Text.UTF8Encoding $False
-            [System.IO.File]::WriteAllLines($resultsFilePath, $executionResults, $Utf8Encoding)
+
+            # Check for content before start of the XML document to handle BOM returned by Invoke-WebRequest method
+            $contentStart = $executionResults.indexOf("<?xml")
+            $content = $executionResults.substring($contentStart)
+
+            [System.IO.File]::WriteAllLines($resultsFilePath, $content, $Utf8Encoding)
             log "INF" "Finished writing execution results to file ""$resultsFilePath""."
 
         } catch {
