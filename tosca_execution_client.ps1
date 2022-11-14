@@ -384,7 +384,6 @@ function enqueueExecution() {
     if ( $debug -eq $true ) {
         log "DBG" "Enqueue parameters:"
         log "DBG" "$body"
-        log "DBG" "$header"
     }
 
     fetchOrRefreshAccessToken
