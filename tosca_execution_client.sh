@@ -721,7 +721,7 @@ do
 done
 
 # Check for execution status after results polling
-if ( [[ "${executionStatus}" == *"Completed"* ]] || [[ "${executionStatus}" == "Error" ]] || [[ "${executionStatus}" == "Cancelled" ]] ) then
+if ( [[ "${executionStatus}" == *"Completed"* ]] then
   log "INF" "Execution with id \"${executionId}\" finished."
   
   # Fetch results when execution is finished
@@ -731,6 +731,9 @@ if ( [[ "${executionStatus}" == *"Completed"* ]] || [[ "${executionStatus}" == "
   writeResults "false"
   log "INF" "Stopping ToscaExecutionClient..."
   exit 0
+elif ( [[ "${executionStatus}" == "Error" ]] || [[ "${executionStatus}" == "Cancelled" ]] ) then
+  log "ERR" "Execution Error or Cancelled!"
+  exit 1
 else
   log "ERR" "Execution exceeded clientTimeout of ${clientTimeout} seconds. Stopping ToscaExecutionClient..."
   exit 1
