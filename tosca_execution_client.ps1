@@ -72,7 +72,7 @@ function displayHelp() {
     Write-Output "Mandatory parameters:"
     Write-Output " toscaServerUrl            URL of Tosca Server, e.g. https://myserver.tricentis.com or http://111.111.111.0:81."
     Write-Output " projectName               Project root name of the Tosca project where the event is located."
-    Write-Output " events                    Names or uniqueIds of the events that you want to execute, separated by comma. If you want to overwrite TCPs or Agent Characteristics for a specific event, use the ""eventsConfigFilePath"" parameter instead."
+    Write-Output " events                    Stringified JSON array containing the names or uniqueIds of the events that you want to execute. If you want to overwrite TCPs or Agent Characteristics for a specific event, use the ""eventsConfigFilePath"" parameter instead."
     Write-Output " eventsConfigFilePath      Path to the JSON file that contains the event configuration, including TCPs and Agent Characteristics. If you use this parameter, you don't need to use the ""events"" parameter."
 
     Write-Output "`nOptions:"

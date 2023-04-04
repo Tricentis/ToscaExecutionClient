@@ -59,7 +59,7 @@ To launch the Tosca Execution Client on a Linux system, use the following comman
 | :-------------------- | :------------ 
 | toscaServerUrl        | URL of Tosca Server, e.g. https://myserver.tricentis.com or http://111.111.111.0:81. 
 | projectName           | Project root name of the Tosca project where the event is located.      
-| events                | Names or uniqueIds of the events that you want to execute, separated by comma. If you want to overwrite TCPs or Agent Characteristics for a specific event, use the "eventsConfigFilePath" parameter instead.      
+| events                | Stringified JSON array containing the names or uniqueIds of the events that you want to execute. If you want to overwrite TCPs or Agent Characteristics for a specific event, use the "eventsConfigFilePath" parameter instead.
 | eventsConfigFilePath &nbsp; &nbsp;  | Path to the JSON file that contains the event configuration, including TCPs and Agent Characteristics. If you use this parameter, you don't need to use the "events" parameter.
 
 Check out the [Tosca help](https://support.tricentis.com/community/manuals_detail.do?&url=continuous_integration/tosca_execution_clients.htm) for more information on how to configure events and some practical examples.
