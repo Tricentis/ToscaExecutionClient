@@ -721,7 +721,8 @@ do
 done
 
 # Check for execution status after results polling
-if ( [[ "${executionStatus}" == *"Completed"* ]] then
+if ( [[ "${executionStatus}" == *"Completed"* ]] )
+then
   log "INF" "Execution with id \"${executionId}\" finished."
   
   # Fetch results when execution is finished

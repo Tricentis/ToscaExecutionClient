@@ -643,7 +643,9 @@ while($keepPolling -eq $true) {
 }
 
 # Check for execution status after results polling
-if ( ($executionStatus -like "*Completed*") -or ($executionStatus -eq "Error") -or ($executionStatus -eq "Cancelled") ) {
+
+if ( ($executionStatus -like "*Completed*") )  
+{
     log "INF" "Execution with id ""${executionId}"" finished."
 
     # Fetch results when execution is finished
@@ -653,6 +655,18 @@ if ( ($executionStatus -like "*Completed*") -or ($executionStatus -eq "Error") -
     writeResults $false
     log "INF" "Stopping ToscaExecutionClient..."
     exit 0
+
+elseif ( ($executionStatus -eq "Error") -or ($executionStatus -eq "Cancelled")) {
+    log "ERR" "Execution with id ""${executionId}"" Error or Cancelled!"}
+
+    # Fetch results when execution is finished
+    fetchExecutionResults $false
+    
+    # Write execution results
+    writeResults $false
+    log "INF" "Stopping ToscaExecutionClient..."
+    exit 1
+
 
 } else {
     log "ERR" "Execution exceeded clientTimeout of $clientTimeout seconds. Stopping ToscaExecutionClient..."
