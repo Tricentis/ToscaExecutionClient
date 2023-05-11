@@ -655,9 +655,9 @@ if ( ($executionStatus -like "*Completed*") )
     writeResults $false
     log "INF" "Stopping ToscaExecutionClient..."
     exit 0
-
+}
 elseif ( ($executionStatus -eq "Error") -or ($executionStatus -eq "Cancelled")) {
-    log "ERR" "Execution with id ""${executionId}"" Error or Cancelled!"}
+    log "ERR" "Execution with id ""${executionId}"" Error or Cancelled!"
 
     # Fetch results when execution is finished
     fetchExecutionResults $false
