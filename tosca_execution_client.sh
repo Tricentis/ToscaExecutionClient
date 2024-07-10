@@ -26,7 +26,7 @@ requestTimeout=180
 requestRetryDelay=30
 pollingInterval=60
 clientTimeout=36000
-caCertificate=""
+caCertificateSwitch=""
 insecureSwitch=""
 
 # Default logging parameters
@@ -247,7 +247,7 @@ function fetchOrRefreshAccessToken() {
         --data-urlencode "grant_type=client_credentials" \
         --data-urlencode "client_id=${clientId}" \
         --data-urlencode "client_secret=${clientSecret}" \
-        --cacert "${caCertificate}"\
+        ${caCertificateSwitch} \
         ${insecureSwitch} \
         2> ${tmpFilePath}
     )
@@ -329,7 +329,7 @@ function enqueueExecution() {
       --header "Content-Type: application/json" \
       --header "Authorization: Bearer ${accessToken}" \
       --data-raw "${enqueueParameters}" \
-      --cacert "${caCertificate}" \
+      ${caCertificateSwitch} \
       ${insecureSwitch} \
       2> ${tmpFilePath}
   )
@@ -405,7 +405,7 @@ function fetchExecutionStatus() {
       --show-error \
       --request GET "${toscaServerUrl}/automationobjectservice/api/execution/${executionId}/status" \
       --header "Authorization: Bearer ${accessToken}" \
-      --cacert "${caCertificate}" \
+      ${caCertificateSwitch} \
       ${insecureSwitch} \
       2> ${tmpFilePath}
   )
@@ -483,7 +483,7 @@ function fetchExecutionResults() {
       --show-error \
       --request GET "${toscaServerUrl}/automationobjectservice/api/execution/${executionId}/results${queryParameters}" \
       --header "Authorization: Bearer ${accessToken}" \
-      --cacert "${caCertificate}" \
+      ${caCertificateSwitch} \
       ${insecureSwitch} \
       2> ${tmpFilePath}
   )
@@ -599,7 +599,7 @@ while [[ "$#" > 0 ]]; do case ${1} in
   --eventsConfigFilePath) eventsConfigFilePath="${2}"; shift;shift;;
 
   # Optional parameters
-  --caCertificate) caCertificate="${2}"; shift;shift;;
+  --caCertificate) caCertificateSwitch="--cacert ${2}"; shift;shift;;
   --clientId) clientId="${2}";shift;shift;;
   --clientSecret) clientSecret="${2}";shift;shift;;
   --clientTimeout) clientTimeout="${2}";shift;shift;;
