@@ -5,11 +5,7 @@ Our Tosca Execution Clients allow you to trigger Tosca TestEvents from CI/CD pip
 Tosca Execution Clients leverage the Execution API of Tosca Server. If you want to integrate directly with the Execution API, check out our online help.
 
 ## Supported functionality
-### Tosca 15.2
 Tosca Execution Client supports full functionality for DEX executions. For Elastic Execution Grid executions, Tosca Execution Client supports enqueuing executions through the enqueueOnly option.
-
-### Tosca 16.0 Technical Preview
-Tosca Execution Client supports full functionality for DEX executions. For Elastic Execution Grid executions, Tosca Execution Client supports full functionality, except overwriting test configuration parameters.
 
 ## System requirements
 To use Tosca Execution Clients, you need Tosca Server 15.2 LTS or higher. We offer the client in two versions: for Windows systems and Linux systems.
@@ -74,6 +70,7 @@ Check out the [Tosca help](https://support.tricentis.com/community/manuals_detai
 | creator               | Name of who triggered the execution. The DEX Monitor UI displays this name (default: ToscaExecutionClient).
 | d, debug              | Activate debug mode.
 | enqueueOnly           | Only enqueue the execution. Tosca Execution Client doesn't fetch results.
+| enqueueOnlyWithStatus | Enqueue the execution and continue polling. ToscaExecutionClient doesn't fetch results.
 | executionEnvironment  | Environment in which you want to execute the event. Possible values are "Dex" or "ElasticExecutionGrid" (default: "Dex").
 | executionId           | ID of the execution for which you want to get results. You only need this parameter if you choose "fetchResultsOnly".
 | fetchPartialResults   | Fetch partial execution results.
@@ -82,7 +79,7 @@ Check out the [Tosca help](https://support.tricentis.com/community/manuals_detai
 | importResults         | Import results into your Tosca project. Possible values are "true" and "false".
 | insecure              | Disables peer certificate validation when you use HTTPS. You can use this parameter only with Tosca Execution Client for Linux.
 | logFolderPath         | Path to the folder where the Tosca Execution Client saves log files (default: logs).
-| pollingInterval       | Interval in seconds in which the Tosca Execution Client requests results from the DEX Server (default: 60).
+| pollingInterval       | Interval in seconds in which the Tosca Execution Client requests results from the DEX Server (default: 120).
 | requestTimeout        | Time in seconds that the Tosca Execution Client waits for a response from AOS (default: 180).
 | requestRetries        | Number of times that Tosca Execution Client retries failed requests (default: 5). You can use this parameter only with Tosca Execution Client for Linux.
 | requestRetryDelay     | Time in seconds that Tosca Execution Client waits until it retries a failed request (default: 30). You can use this parameter only with Tosca Execution Client for Linux.
