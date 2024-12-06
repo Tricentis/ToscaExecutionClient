@@ -607,19 +607,26 @@ if ( $fetchResultsOnly -eq $true ) {
         exit 0
     }
 
-    # Skip fetching of execution results when enqueueOnlyWithStatusOption is given
+# Skip fetching of execution results when enqueueOnlyWithStatusOption is given
     if ($enqueueOnlyWithStatus -eq $true) {
     log "INF" "enqueueOnlyWithStatus activated: Polling will continue, but results will not be fetched."
-    $keepPolling = $true
+    $executionTimeout = $(getTimestamp) + $clientTimeout	
+	$keepPolling = $true;
     while ($keepPolling -eq $true) {
-        $executionStatus = Get-ExecutionStatus -toscaServerUrl $toscaServerUrl -projectName $projectName
-        log "DBG" "Current execution status: $executionStatus"
-        $keepPolling = ($(getTimestamp) -le $executionTimeout) -and -not ($executionStatus -like "*Completed*") -and -not ($executionStatus -eq "Error") -and -not ($executionStatus -eq "Cancelled")
-        if ($keepPolling -eq $false) { break }
+		fetchExecutionStatus
+		log "INF" "Status of execution with id ""${executionId}"": ""${executionStatus}"""
+		
+		$keepPolling = ($(getTimestamp) -le $executionTimeout) -and -not ($executionStatus -like "*Completed*") -and -not ($executionStatus -eq "Error") -and -not ($executionStatus -eq "Cancelled");
+		
+        if ($keepPolling -eq $false) { 
+			 break; 
+		}
+		
+		log "INF" "Starting next polling cycle in $pollingInterval seconds..."
         Start-Sleep -Seconds $pollingInterval
     }
     log "INF" "Polling completed for enqueueOnlyWithStatus. Exiting without fetching results."
-    return
+    exit 0
 }
 }
 
