@@ -53,6 +53,9 @@ param(
 [string]$executionStatus=""
 [string]$executionResults=""
 
+# Define logFileName
+$logFileName = "$(Get-Date -Format "yyyyMMddssfff")_ToscaExecutionClient.txt"
+
 ######################################################################
 # Functions
 ######################################################################
@@ -119,7 +122,6 @@ function log([string]$logLevel, [string]$logMessage) {
         }
     }
 
-    $logFileName = "$(Get-Date -Format "yyyyMMdd")_ToscaExecutionClient.txt"
     $logFilePath = "$logFolderPath\$logFileName"
 
     try {        
