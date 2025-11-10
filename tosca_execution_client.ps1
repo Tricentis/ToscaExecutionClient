@@ -29,12 +29,13 @@ param(
     [Alias("h")]
     [switch]$help,
     [switch]$enqueueOnly,
+    [switch]$enqueueOnlyWithStatus,
     [string]$executionId = "",
     [string]$importResults = "true",
     [switch]$fetchPartialResults,
     [switch]$fetchResultsOnly,
     [string]$logFolderPath = "logs",
-    [int]$pollingInterval = 60,
+    [int]$pollingInterval = 120,
     [int]$requestTimeout = 180,
     [string]$resultsFileName = "",
     [string]$resultsFolderPath = "results",
@@ -82,6 +83,7 @@ function displayHelp() {
     Write-Output " creator                   Name of who triggered the execution. The DEX Monitor UI displays this name (default: ToscaExecutionClient)."
     Write-Output " debug                     Activates debug mode."
     Write-Output " enqueueOnly               Only enqueue the execution. ToscaExecutionClient doesn't fetch results."
+    Write-Output " enqueueOnlyWithStatus     Enqueue the execution and continue polling. ToscaExecutionClient doesn't fetch results." 
     Write-Output " executionEnvironment      Environment in which you want to execute the event. Possible values are ""Dex"" or ""ElasticExecutionGrid"" (default: ""Dex"")."
     Write-Output " executionId               ID of the execution for which you want to get results. You only need this parameter if you choose ""fetchResultsOnly""."
     Write-Output " fetchPartialResults       Fetch partial execution results."
@@ -89,7 +91,7 @@ function displayHelp() {
     Write-Output " help                      Get usage information for the ToscaExecutionClient."
     Write-Output " importResults             Import results into your Tosca project. Possible values are ""true"" and ""false""."
     Write-Output " logFolderPath             Path to the folder where the ToscaExecutionClient saves log files (default: logs)."
-    Write-Output " pollingInterval           Interval in seconds in which the ToscaExecutionClient requests results from the DEX Server (default: 60)."
+    Write-Output " pollingInterval           Interval in seconds in which the ToscaExecutionClient requests results from the DEX Server (default: 120)."
     Write-Output " resultsFileName           Name of the file in which ToscaExecutionClient saves execution results (default: ""<executionId>_results.xml"")."
     Write-Output " requestTimeout            Time in seconds that the ToscaExecutionClient waits for a response from AOS (default: 180)."
     Write-Output " resultsFolderPath         Path to the folder where ToscaExecutionClient saves execution results (default: results)."
@@ -604,6 +606,28 @@ if ( $fetchResultsOnly -eq $true ) {
         log "INF" "Stopping ToscaExecutionClient..."
         exit 0
     }
+
+# Skip fetching of execution results when enqueueOnlyWithStatusOption is given
+    if ($enqueueOnlyWithStatus -eq $true) {
+    log "INF" "enqueueOnlyWithStatus activated: Polling will continue, but results will not be fetched."
+    $executionTimeout = $(getTimestamp) + $clientTimeout	
+	$keepPolling = $true;
+    while ($keepPolling -eq $true) {
+		fetchExecutionStatus
+		log "INF" "Status of execution with id ""${executionId}"": ""${executionStatus}"""
+		
+		$keepPolling = ($(getTimestamp) -le $executionTimeout) -and -not ($executionStatus -like "*Completed*") -and -not ($executionStatus -eq "Error") -and -not ($executionStatus -eq "Cancelled");
+		
+        if ($keepPolling -eq $false) { 
+			 break; 
+		}
+		
+		log "INF" "Starting next polling cycle in $pollingInterval seconds..."
+        Start-Sleep -Seconds $pollingInterval
+    }
+    log "INF" "Polling completed for enqueueOnlyWithStatus. Exiting without fetching results."
+    exit 0
+}
 }
 
 # Handle missing execution id
