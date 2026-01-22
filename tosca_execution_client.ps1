@@ -567,6 +567,11 @@ if ( [String]::IsNullOrEmpty($toscaServerUrl) ) {
     $validationFailed = $false
 }
 
+# If the toscaServerUrl contains and trailing slash remove it, as this breaks API calls
+if ($toscaServerUrl -match "/$") {
+	$toscaServerUrl = $toscaServerUrl.Substring(0, $toscaServerUrl.Length - 1)
+}
+
 # Print help and exit if validation failed
 if ( $validationFailed -eq $true ) {
     displayHelp

@@ -634,6 +634,11 @@ else
   validationFailed=false
 fi
 
+# Strip trailing / from url as this causes Tosca Server APIs to Error
+if [[ ${toscaServerUrl} =~ /$ ]]; then
+	toscaServerUrl="${toscaServerUrl%/}"
+fi
+
 # Skip enqueue call if fetchResultsOnlyOption is given
 if ( [ "${validationFailed}" == "true" ] ) then
   displayHelp
